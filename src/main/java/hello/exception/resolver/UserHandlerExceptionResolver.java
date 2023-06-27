@@ -24,15 +24,15 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
             if (ex instanceof UserException) {
                 log.info("UserException resolver to 400");
                 String acceptHeader = request.getHeader("accept");
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // response의 상태코드를 400으로 바꿈
 
                 if ("application/json".equals(acceptHeader)) {
                     Map<String, Object> errorResult = new HashMap<>();
-                    errorResult.put("ex", ex.getClass());
-                    errorResult.put("message", ex.getMessage());
+                    errorResult.put("ex", ex.getClass()); // 예외클래스 정보
+                    errorResult.put("message", ex.getMessage()); // 에러메세지
 
                     String result = objectMapper.writeValueAsString(errorResult);
-                    // objectMapper로 json을 문자로 바꿈
+                    // objectMapper로 (Map)(json을) 문자로 바꿔줌
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("utf-8");
