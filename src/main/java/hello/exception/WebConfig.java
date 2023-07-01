@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "*.ico", "/error", "/error-page/**"); // 오류 페이지 경로
+        // /error-page/** -> 오류 페이지 요청 모두 인터셉터가 작동하지 않게 아예 막아버림
     }
 
     @Override
@@ -40,6 +41,8 @@ public class WebConfig implements WebMvcConfigurer {
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ERROR);
+        // 이 filter는 고객 request, 서버에서 오류 일 때 즉, 두가지 일때 호출된다.
+        // 파라미터에 아무것도 안쓰면 default는 DispatcherType.REQUEST
         return filterRegistrationBean;
     }
 

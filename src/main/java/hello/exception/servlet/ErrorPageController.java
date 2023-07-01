@@ -42,6 +42,9 @@ public class ErrorPageController {
         return "error-page/500";
     }
 
+    /**
+     * API 예외처리
+     */
     @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE)
     // 클라이언트가 보냈던 Accept 타입이 application/json인 경우에는 지금 이 컨트롤러가 우선 호출
     public ResponseEntity<Map<String, Object>> errorPage500Api(HttpServletRequest request, HttpServletResponse response) {
@@ -53,6 +56,7 @@ public class ErrorPageController {
         result.put("message", ex.getMessage());
 
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        // 오류 상태코드 Integer로 꺼낼 수 있다. (RequestDispatcher안에 위에 있는 상수가 다 정의되어 있음)
 
         return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
     }

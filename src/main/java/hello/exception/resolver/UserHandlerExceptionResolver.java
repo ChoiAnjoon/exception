@@ -36,10 +36,11 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("utf-8");
-                    response.getWriter().write(result);
+                    response.getWriter().write(result); // http 응답 body에 json 형태로 들어감
                     return new ModelAndView();
 
                 } else {
+                    // TEXT/HTML
                     return new ModelAndView("error/500");
                 }
             }
